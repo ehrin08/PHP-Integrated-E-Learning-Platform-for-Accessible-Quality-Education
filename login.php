@@ -2,22 +2,12 @@
 // Start the session
 session_start();
 
-// Database configuration
-$hostname = "localhost";
-$dbname = "qualityeduc";
-$username = "root";
-$password = "";
-
-// Create a database connection
-$conn = new mysqli($hostname, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// Include the database connection file
+include_once 'connection.php';  // Updated to 'connection.php'
 
 // Check if form data is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get the form data and sanitize input
     $user = $conn->real_escape_string($_POST['username']);
     $pass = $conn->real_escape_string($_POST['password']);
     $category = $conn->real_escape_string($_POST['category']);
@@ -41,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Set session variable for the username
         $_SESSION['username'] = $user;
 
-        // Redirect to home.php
+        // Redirect to home.php outside the Commands folder
         header("Location: home.php");
         exit();
     } else {
