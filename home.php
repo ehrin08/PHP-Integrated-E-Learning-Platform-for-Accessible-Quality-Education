@@ -1,23 +1,16 @@
 <?php
-// Start the session
 session_start();
 
-// Check if the session variable 'username' is set
 if (!isset($_SESSION['username'])) {
-    // Redirect to login page if not logged in
-    header("Location:   login.php");
+    header("Location: login.php");
     exit();
 }
 
-// Fetch the username from the session
-$username = htmlspecialchars($_SESSION['username']); // Escape for security
+$username = htmlspecialchars($_SESSION['username']);
 
-// Include the database connection file (if necessary for future use)
 include_once 'connection.php';
 
-// Check for status in the URL query parameter
 $status = isset($_GET['status']) ? $_GET['status'] : '';
-
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +24,6 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     <h1>Welcome <?php echo $username; ?></h1>
 
     <?php
-    // Display status message
     if ($status == 'success') {
         echo "<script>alert('File uploaded successfully!');</script>";
     } elseif ($status == 'error') {
