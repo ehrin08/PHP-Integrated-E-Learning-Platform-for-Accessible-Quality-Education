@@ -1,5 +1,5 @@
 <?php
-include_once 'connection.php'; // Include your database connection
+include_once 'connection.php'; 
 
 $sql = "SELECT username, score FROM quiz_scores ORDER BY score DESC";
 $result = $conn->query($sql);
