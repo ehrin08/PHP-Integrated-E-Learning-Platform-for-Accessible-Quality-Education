@@ -41,7 +41,9 @@ class FileUpload {
     public function upload() {
         if ($this->file['error'] === UPLOAD_ERR_OK) {
             $allowedTypes = ['pdf', 'video', 'picture'];
-            //$extension = pathinfo($this->file['name'], PATHINFO_EXTENSION);
+            $extension = pathinfo($this->file['name'], PATHINFO_EXTENSION);
+
+            $extension = pathinfo($this->file['name'], PATHINFO_EXTENSION);
             if (!in_array($this->fileType, $allowedTypes)) {
                 header("Location: home.php?status=error");
                 exit();
