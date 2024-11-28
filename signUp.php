@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-
+    
     <link rel="stylesheet" href="style.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -16,25 +16,31 @@
 
 <body>
     <nav>
-        <a href="index.php"><h3>EmpowerEd</h3></a>
-        
+        <h3>EmpowerEd</h3>
     </nav>
     <div class="front">
-        <h4>Login</h4>
-        <form action="b-login.php" method="post">
+        <h4>Create Account</h4>
+        <form action="b-signUp.php" method="post">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+
+            <br><br>
+
             <label for="email">Email:</label>
-            <input type="text" id="email" name="email" class="form-control" required>
+            <input type="text" class="form-control" id="email" name="email" required>
 
             <br><br>
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" class="form-control" required>
+            <input type="text" class="form-control" id="password" name="password" required>
 
             <br><br>
 
-            <button type="submit" class="btns">Login</button>
+            <div class="center">
+                <button type="submit" class="btns">Create Account</button>
+            </div>
+
         </form>
-        <a href="index.php"></a>
     </div>
 
 </body>
