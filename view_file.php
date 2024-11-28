@@ -2,7 +2,7 @@
 require_once 'dbConnection.php';
 require_once 'b-crud.php';
 
-
+// Establish database connection
 $database = new databaseConn();
 $db = $database->connect();
 $crud = new crud($db);
@@ -26,4 +26,4 @@ if (isset($_GET['material_id'])) {
 } else {
     echo "No material ID specified.";
 }
-?> 
+?>
