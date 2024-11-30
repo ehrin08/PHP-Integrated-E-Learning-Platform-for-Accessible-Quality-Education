@@ -19,7 +19,7 @@
         <h3>EmpowerEd</h3>
     </nav>
     <div class="front">
-        <h4>Create Account</h4>
+        <h4 style="padding: 40px;">Create Account</h4>
         <form action="b-signUp.php" method="post">
             <label for="username">Username:</label>
             <input type="text" class="form-control" id="username" name="username" required>

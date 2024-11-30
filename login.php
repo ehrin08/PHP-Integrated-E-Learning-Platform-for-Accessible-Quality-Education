@@ -20,7 +20,7 @@
         
     </nav>
     <div class="front">
-        <h4>Login</h4>
+        <h4 style="padding: 40px;">Login</h4>
         <form action="b-login.php" method="post">
             <label for="email">Email:</label>
             <input type="text" id="email" name="email" class="form-control" required>
