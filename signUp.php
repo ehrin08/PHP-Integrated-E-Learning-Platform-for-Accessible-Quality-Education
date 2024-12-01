@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    
+
     <link rel="stylesheet" href="style.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -16,10 +16,12 @@
 
 <body>
     <nav>
-        <h3>EmpowerEd</h3>
+        <a href="index.php">
+            <h3>EmpowerEd</h3>
+        </a>
     </nav>
     <div class="front">
-        <h4>Create Account</h4>
+        <h4 style="padding: 40px;">Create Account</h4>
         <form action="b-signUp.php" method="post">
             <label for="username">Username:</label>
             <input type="text" class="form-control" id="username" name="username" required>

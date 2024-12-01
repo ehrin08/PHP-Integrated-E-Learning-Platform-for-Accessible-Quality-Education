@@ -1,25 +1,24 @@
 <?php
+session_start();
 require_once 'dbConnection.php';
 require_once 'b-crud.php';
 
-// Establish database connection
-$database = new databaseConn();
-$db = $database->connect();
-$crud = new crud($db);
-
-// Check if a material_id is provided in the query string
 if (isset($_GET['material_id'])) {
-    $material_id = intval($_GET['material_id']); // Ensure material_id is an integer
+    $material_id = intval($_GET['material_id']);
+    $database = new databaseConn();
+    $conn = $database->connect();
+    $crud = new Crud($conn);
 
-    // Fetch the file data using the crud class
+    // Fetch the file from the database
     $file = $crud->getFile($material_id);
 
     if ($file) {
-        // Serve the file as a PDF document
-        header("Content-Type: application/pdf");
-        header("Content-Disposition: inline; filename=\"" . $file['name'] . "\"");
+        // Set the appropriate headers for PDF
+        header('Content-Type: application/pdf');
+        header("Content-Disposition: inline; filename=\"" . $file['title'] . "\"");
+
+        // Output the PDF content from the database
         echo $file['document'];
-        exit();
     } else {
         echo "File not found.";
     }

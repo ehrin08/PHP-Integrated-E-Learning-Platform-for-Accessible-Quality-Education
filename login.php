@@ -16,11 +16,12 @@
 
 <body>
     <nav>
-        <a href="index.php"><h3>EmpowerEd</h3></a>
-        
+        <a href="index.php">
+            <h3>EmpowerEd</h3>
+        </a>
     </nav>
     <div class="front">
-        <h4>Login</h4>
+        <h4 style="padding: 40px;">Login</h4>
         <form action="b-login.php" method="post">
             <label for="email">Email:</label>
             <input type="text" id="email" name="email" class="form-control" required>
