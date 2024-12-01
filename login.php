@@ -16,8 +16,9 @@
 
 <body>
     <nav>
-        <a href="index.php"><h3>EmpowerEd</h3></a>
-        
+        <a href="index.php">
+            <h3>EmpowerEd</h3>
+        </a>
     </nav>
     <div class="front">
         <h4 style="padding: 40px;">Login</h4>
