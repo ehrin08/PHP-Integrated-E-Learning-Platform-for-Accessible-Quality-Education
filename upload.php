@@ -66,8 +66,8 @@ if ($user) {
             <input type="text" name="title" id="title" placeholder="Title" required class="form-control">
             <button type="submit" class="btns-h">Submit</button>
         </form>
-
-        <h3 style="padding: 20px;">Uploaded Files</h3>
+            <br>
+        <h3 style="padding: 20px;">Uploaded Files by you</h3>
         <div style="padding:20px">
             <div class="table">
                 <table id="userTable" class="display">

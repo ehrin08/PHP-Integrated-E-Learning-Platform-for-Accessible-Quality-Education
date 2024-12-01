@@ -50,7 +50,7 @@ $files = $crud->readAllFiles();
         <h3 style="padding:20px">Home</h3>
         <h4>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h4>
         <a href="upload.php" class="btns-h">Upload</a>
-
+        <a href="b-logout.php" class="btns-h">Logout</a>
         <div style="padding:20px">
             <div class="table">
                 <table id="userTable" class="display">
