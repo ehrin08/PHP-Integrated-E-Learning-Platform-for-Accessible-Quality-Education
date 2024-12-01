@@ -79,5 +79,27 @@ class crud
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+<<<<<<< Updated upstream
     
+=======
+
+    public function getAccountIdByUsername($username)
+    {
+        $query = "SELECT account_id FROM " . $this->accountTable . " WHERE username = :username";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user ? $user['account_id'] : null; // Return account_id or null if not found
+    }
+
+    public function deleteFile($material_id): bool
+    {
+        $query = "DELETE FROM " . $this->materialsTable . " WHERE material_id = :material_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
+        return $stmt->execute(); // Returns true if successful, false otherwise
+    }
+
+>>>>>>> Stashed changes
 }
