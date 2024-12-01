@@ -68,11 +68,9 @@ class crud
 
     public function readFile($accountId)
     {
-        $query = "SELECT material_id, title, contributor, upload_date 
-                  FROM " . $this->materialsTable . " 
-                  WHERE account_id = :account_id";
+        $query = "SELECT material_id, title, contributor, upload_date FROM " . $this->materialsTable . " WHERE account_id = :account_id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':account_id', $accountId, PDO::PARAM_INT);
+        $stmt->bindParam(':account_id', $accountId);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -93,4 +91,16 @@ class crud
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getAccountIdByUsername($username)
+    {
+        $query = "SELECT account_id FROM " . $this->accountTable . " WHERE username = :username";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user ? $user['account_id'] : null; // Return account_id or null if not found
+    }
+
+    
 }

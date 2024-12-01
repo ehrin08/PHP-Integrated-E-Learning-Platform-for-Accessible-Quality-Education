@@ -18,14 +18,9 @@ $crud = new crud($db);
 
 // Fetch account_id of the logged-in user
 $username = $_SESSION['username'];
-$query = "SELECT account_id FROM account WHERE username = :username";
-$stmt = $db->prepare($query);
-$stmt->bindParam(':username', $username);
-$stmt->execute();
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$accountId = $crud->getAccountIdByUsername($username);
 
-if ($user) {
-    $accountId = $user['account_id'];
+if ($accountId) {
     // Fetch uploaded files specific to the logged-in user
     $files = $crud->readFile($accountId);
 } else {
@@ -66,7 +61,7 @@ if ($user) {
             <input type="text" name="title" id="title" placeholder="Title" required class="form-control">
             <button type="submit" class="btns-h">Submit</button>
         </form>
-            <br>
+        <br>
         <h3 style="padding: 20px;">Uploaded Files by you</h3>
         <div style="padding:20px">
             <div class="table">
