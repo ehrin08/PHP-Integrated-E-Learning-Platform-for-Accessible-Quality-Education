@@ -17,7 +17,7 @@ $db = $database->connect();
 $crud = new crud($db);
 
 // Fetch uploaded files from the database
-$files = $crud->readFile();
+$files = $crud->readAllFiles();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +42,9 @@ $files = $crud->readFile();
 
 <body>
     <nav>
-        <h3>EmpowerEd</h3>
+        <a href="home.php">
+            <h3>EmpowerEd</h3>
+        </a>
     </nav>
     <div class="front">
         <h3 style="padding:20px">Home</h3>
