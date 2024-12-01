@@ -72,7 +72,8 @@ class crud
     }
     
 
-    public function getFile($material_id) {
+    public function getFile($material_id)
+    {
         $query = "SELECT title, document FROM " . $this->materialsTable . " WHERE material_id = :material_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
