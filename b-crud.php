@@ -92,6 +92,14 @@ class crud
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         return $user ? $user['account_id'] : null; 
     }
+      public function deleteFile($material_id): bool
+    {
+        $query = "DELETE FROM " . $this->materialsTable . " WHERE material_id = :material_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
+        return $stmt->execute(); // Returns true if successful, false otherwise
+    }
+
 
     public function deleteFile($material_id): bool
     {
