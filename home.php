@@ -117,8 +117,3 @@ $files = $crud->readAllFiles();
 </body>
 
 </html>
-
->>>>>>> Stashed changes
-</body>
-
-</html>
