@@ -79,9 +79,7 @@ class crud
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-<<<<<<< Updated upstream
-    
-=======
+
 
     public function getAccountIdByUsername($username)
     {
@@ -101,13 +99,4 @@ class crud
     }
 
 
-    public function deleteFile($material_id): bool
-    {
-        $query = "DELETE FROM " . $this->materialsTable . " WHERE material_id = :material_id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
-        return $stmt->execute(); 
-    }
-
->>>>>>> Stashed changes
 }
