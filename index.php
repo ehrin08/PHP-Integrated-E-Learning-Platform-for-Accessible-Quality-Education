@@ -16,13 +16,13 @@
 
 <body>
     <nav>
-        <h3>EmpowerEd</h3>
+        <a href="index.php"><h3>EmpowerEd</h3></a>
     </nav>
     <div class="front">
-        <h3>Welcome to EmpowerEd</h3>
+        <h3 style="padding: 50px;">Welcome to EmpowerEd</h3>
         <div class="row">
-            <a href="login.php"><button class="btns">Login</button></a>
-            <a href="signUp.php"><button class="btns">Sign Up</button></a>
+            <a href="login.php"class="btns">Login</a>
+            <a href="signUp.php"class="btns">Sign Up</a>
         </div>
 
     </div>
