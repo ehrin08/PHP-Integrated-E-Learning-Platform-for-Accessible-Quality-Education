@@ -1,14 +1,11 @@
 <?php
 session_start();
 
-// Check if user is logged in
 if (!isset($_SESSION['username'])) {
-    // Redirect to login page if not logged in
     header('Location: login.php');
     exit();
 }
 
-// Include database connection and CRUD class
 require_once 'dbConnection.php';
 require_once 'b-crud.php';
 
@@ -16,7 +13,8 @@ $database = new databaseConn();
 $db = $database->connect();
 $crud = new crud($db);
 
-// Fetch uploaded files from the database
+$username = $_SESSION['username'];
+$accountId = $crud->getAccountIdByUsername($username);
 $files = $crud->readAllFiles();
 ?>
 <!DOCTYPE html>
@@ -73,26 +71,17 @@ $files = $crud->readAllFiles();
                                 </td>
                                 <td>
                                     <?php
-                                    // Assuming you have a contributor field; otherwise, replace with a placeholder or remove
+                                    
                                     echo htmlspecialchars($file['contributor'] ?? 'Unknown');
                                     ?>
                                 </td>
                                 <td>
                                     <?php
-                                    // Assuming you have an upload_date field; otherwise, replace with a placeholder or remove
+                                    
                                     echo htmlspecialchars($file['upload_date'] ?? 'N/A');
                                     ?>
                                 </td>
                                 <td>
-                                    <!-- Edit Icon -->
-                                    <span>
-                                        <a href="edit.php?id=1" title="Edit">
-                                            <i class="fa fa-edit" style="color: #007bff; cursor: pointer;"></i>
-                                        </a>
-                                    </span>
-
-                                    <!-- Delete Icon -->
-                                    
                                     <span>
                                         <form method="POST" action="b-delete.php" style="display:inline;">
                                             <input type="hidden" name="material_id" value="<?php echo $file['material_id']; ?>" />

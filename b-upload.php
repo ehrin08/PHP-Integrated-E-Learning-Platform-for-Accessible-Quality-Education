@@ -13,9 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['document'])) {
     $title = $_POST['title'];
     $fileName = $_FILES['document']['name'];
     $fileData = file_get_contents($_FILES['document']['tmp_name']);
-    $uploader = $_SESSION['username']; // Get the uploader's username
+    $uploader = $_SESSION['username'];
 
-    // Retrieve account_id using the method in the crud class
     $accountId = $crud->getAccountIdByUsername($uploader);
 
     if ($accountId && $crud->uploadFile($title, $fileData, $uploader, $accountId)) {

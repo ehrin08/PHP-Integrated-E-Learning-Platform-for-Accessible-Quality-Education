@@ -1,14 +1,12 @@
 <?php
 session_start();
 
-// Check if user is logged in
+
 if (!isset($_SESSION['username'])) {
-    // Redirect to login page if not logged in
     header('Location: login.php');
     exit();
 }
 
-// Include database connection and CRUD class
 require_once 'dbConnection.php';
 require_once 'b-crud.php';
 
@@ -16,15 +14,13 @@ $database = new databaseConn();
 $db = $database->connect();
 $crud = new crud($db);
 
-// Fetch account_id of the logged-in user
 $username = $_SESSION['username'];
 $accountId = $crud->getAccountIdByUsername($username);
 
 if ($accountId) {
-    // Fetch uploaded files specific to the logged-in user
     $files = $crud->readFile($accountId);
 } else {
-    $files = []; // No files if account_id not found
+    $files = []; 
 }
 ?>
 <!DOCTYPE html>
@@ -55,6 +51,7 @@ if ($accountId) {
         </a>
     </nav>
     <div class="front">
+    <a href="home.php" class="btn btn-secondary mb-3">Back</a>
         <h3 style="padding: 40px;">Upload File</h3>
         <form action="b-upload.php" method="post" enctype="multipart/form-data">
             <input type="file" name="document" class="form-control" required accept=".pdf">
@@ -90,15 +87,9 @@ if ($accountId) {
                                     <?php echo htmlspecialchars($file['upload_date'] ?? 'N/A'); ?>
                                 </td>
                                 <td>
-                                    <!-- Edit Icon -->
-                                    <span>
-                                        <a href="edit.php?id=1" title="Edit">
-                                            <i class="fa fa-edit" style="color: #007bff; cursor: pointer;"></i>
-                                        </a>
-                                    </span>
-
-                                    <!-- Delete Icon -->
-                                    
+                                   <a href="b-update.php?material_id=<?php echo $file['material_id']; ?>" class="btn btn-primary">Edit</a>
+                                </td>
+                                <td>
                                     <span>
                                         <form method="POST" action="b-delete.php" style="display:inline;">
                                             <input type="hidden" name="material_id" value="<?php echo $file['material_id']; ?>" />

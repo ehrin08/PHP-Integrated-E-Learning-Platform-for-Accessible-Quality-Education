@@ -19,8 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo sweetAlert('Oops...', 'Something went wrong!', 'error');
         }
     } catch (PDOException $e) {
-        if ($e->getCode() == 23000) { // MySQL constraint violation
-            // Check which field caused the error
+        if ($e->getCode() == 23000) { 
             if (strpos($e->getMessage(), 'username') !== false) {
                 echo sweetAlert('Error', 'Username already exists! Please choose a different one.', 'warning', 'signUp.php');
             } elseif (strpos($e->getMessage(), 'email') !== false) {

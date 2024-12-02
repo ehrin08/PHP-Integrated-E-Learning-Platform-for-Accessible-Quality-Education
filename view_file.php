@@ -9,15 +9,12 @@ if (isset($_GET['material_id'])) {
     $conn = $database->connect();
     $crud = new Crud($conn);
 
-    // Fetch the file from the database
     $file = $crud->getFile($material_id);
 
     if ($file) {
-        // Set the appropriate headers for PDF
         header('Content-Type: application/pdf');
         header("Content-Disposition: inline; filename=\"" . $file['title'] . "\"");
 
-        // Output the PDF content from the database
         echo $file['document'];
     } else {
         echo "File not found.";

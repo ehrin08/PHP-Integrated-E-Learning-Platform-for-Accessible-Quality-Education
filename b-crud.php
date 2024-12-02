@@ -2,8 +2,8 @@
 
 class crud
 {
-    private $conn; //connection
-    private $accountTable = "account"; //account table
+    private $conn;
+    private $accountTable = "account"; 
     private $materialsTable = "learning_materials";
 
     public $id;
@@ -59,7 +59,7 @@ class crud
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':document', $fileData, PDO::PARAM_LOB); // For blob
+        $stmt->bindParam(':document', $fileData, PDO::PARAM_LOB); 
         $stmt->bindParam(':contributor', $uploader);
         $stmt->bindParam(':account_id', $accountId);
 
@@ -99,14 +99,14 @@ class crud
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $user ? $user['account_id'] : null; // Return account_id or null if not found
+        return $user ? $user['account_id'] : null; 
     }
     public function deleteFile($material_id): bool
     {
         $query = "DELETE FROM " . $this->materialsTable . " WHERE material_id = :material_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
-        return $stmt->execute(); // Returns true if successful, false otherwise
+        return $stmt->execute(); 
     }
 
     
