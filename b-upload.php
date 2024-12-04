@@ -2,7 +2,8 @@
 session_start();
 require_once 'dbConnection.php';
 require_once 'b-crud.php';
-require_once 'sweetAlert.php';
+
+header('Content-Type: application/json'); // Set JSON response header
 
 $database = new databaseConn();
 $conn = $database->connect();
@@ -18,8 +19,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['document'])) {
     $accountId = $crud->getAccountIdByUsername($uploader);
 
     if ($accountId && $crud->uploadFile($title, $fileData, $uploader, $accountId)) {
-        echo sweetAlert('Success', 'File uploaded successfully!', 'success', 'upload.php');
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'File uploaded successfully!',
+        ]);
     } else {
-        echo sweetAlert('Error', 'File upload failed.', 'error', 'upload.php');
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'File upload failed.',
+        ]);
     }
+} else {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'No file uploaded or invalid request.',
+    ]);
 }
+?>

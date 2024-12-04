@@ -1,3 +1,6 @@
+$(document).ready(function() {
+    $('#userTable').DataTable();
+});
 /**
  * General function to handle form submission using AJAX.
  * @param {string} formId - The ID of the form to submit
@@ -52,5 +55,37 @@ function handleLoginFormSubmission(event) {
         }).then(() => {
             if (response.redirect) window.location.href = response.redirect;
         });
+    });
+}
+
+/**
+ * Handles the submission of the login form.
+ * @param {Event} event - The form submission event
+ */
+
+function handleFileUpload(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    var formData = new FormData($('#uploadForm')[0]); // Get form data including file
+    $.ajax({
+        url: 'b-upload.php',
+        type: 'POST',
+        data: formData,
+        processData: false, // Prevent jQuery from processing the data
+        contentType: false, // Prevent jQuery from setting contentType
+        success: function(response) {
+            Swal.fire({
+                title: response.status === 'success' ? 'Success!' : 'Error',
+                text: response.message,
+                icon: response.status
+            }).then(() => {
+                if (response.status === 'success') {
+                    location.reload(); // Reload the page on success
+                }
+            });
+        },
+        error: function() {
+            Swal.fire('Error', 'An unexpected error occurred.', 'error');
+        }
     });
 }
