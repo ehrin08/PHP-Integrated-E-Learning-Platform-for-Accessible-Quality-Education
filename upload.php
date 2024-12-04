@@ -33,43 +33,12 @@ if ($accountId) {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
     <script src="script.js"></script>
-    <!-- <script>
-        
-        
-        // AJAX function for file upload
-        function handleFileUpload(event) {
-            event.preventDefault(); // Prevent default form submission
-
-            var formData = new FormData($('#uploadForm')[0]); // Get form data including file
-            $.ajax({
-                url: 'b-upload.php',
-                type: 'POST',
-                data: formData,
-                processData: false, // Prevent jQuery from processing the data
-                contentType: false, // Prevent jQuery from setting contentType
-                success: function(response) {
-                    Swal.fire({
-                        title: response.status === 'success' ? 'Success!' : 'Error',
-                        text: response.message,
-                        icon: response.status
-                    }).then(() => {
-                        if (response.status === 'success') {
-                            location.reload(); // Reload the page on success
-                        }
-                    });
-                },
-                error: function() {
-                    Swal.fire('Error', 'An unexpected error occurred.', 'error');
-                }
-            });
-        }
-    </script> -->
 </head>
 
 <body>
@@ -97,15 +66,20 @@ if ($accountId) {
                             <th>Preview</th>
                             <th>Contributor</th>
                             <th>Upload Date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($files as $file): ?>
-                            <tr>
+                            <tr id="fileRow<?php echo $file['material_id']; ?>">
                                 <td><?php echo htmlspecialchars($file['title']); ?></td>
                                 <td><a href="view_file.php?material_id=<?php echo $file['material_id']; ?>" target="_blank">View</a></td>
                                 <td><?php echo htmlspecialchars($file['contributor'] ?? 'Unknown'); ?></td>
                                 <td><?php echo htmlspecialchars($file['upload_date'] ?? 'N/A'); ?></td>
+                                <td>
+                                    <a href="edit.php?material_id=<?php echo $file['material_id']; ?>" class="btn btn-primary">Edit</a>
+                                    <a href="javascript:void(0);" onclick="deleteFile(<?php echo $file['material_id']; ?>)" class="btn btn-danger">Delete</a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

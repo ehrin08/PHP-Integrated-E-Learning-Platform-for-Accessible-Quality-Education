@@ -89,3 +89,103 @@ function handleFileUpload(event) {
         }
     });
 }
+
+// Handle file deletion using AJAX
+function deleteFile(materialId) {
+    console.log('deleteFile called with materialId: ' + materialId);  // Debug log
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to delete this file?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            console.log('Deleting file...');  // Debug log
+            $.ajax({
+                url: 'b-delete.php',
+                type: 'GET',
+                data: { material_id: materialId },
+                success: function(response) {
+                    console.log('Delete response: ', response);  // Debug log
+                    Swal.fire({
+                        title: response.status === 'success' ? 'Deleted!' : 'Error',
+                        text: response.message,
+                        icon: response.status
+                    }).then(() => {
+                        if (response.status === 'success') {
+                            location.reload();
+                        }
+                    });
+                },
+                error: function() {
+                    Swal.fire('Error', 'An unexpected error occurred while deleting the file.', 'error');
+                }
+            });
+        }
+    });
+}
+
+// Handle file editing using AJAX
+function editFile(materialId) {
+    console.log('editFile called with materialId: ' + materialId);  // Debug log
+    $.ajax({
+        url: 'b-update.php', // Placeholder for actual update script
+        type: 'GET',
+        data: { material_id: materialId },
+        success: function(response) {
+            console.log('Edit response: ', response);  // Debug log
+            Swal.fire({
+                title: 'Edit Success',
+                text: 'Record was successfully updated!',
+                icon: 'success'
+            }).then(() => {
+                location.reload();
+            });
+        },
+        error: function() {
+            Swal.fire('Error', 'An unexpected error occurred while editing.', 'error');
+        }
+    });
+}
+
+// Handle file deletion using AJAX
+// Handle file deletion using AJAX
+function deleteFile(materialId) {
+    console.log('deleteFile called with materialId: ' + materialId);  // Debug log
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to delete this file?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            console.log('Deleting file...');  // Debug log
+            $.ajax({
+                url: 'b-delete.php', // URL of the PHP file to delete the record
+                type: 'GET', // Use GET method
+                data: { material_id: materialId }, // Pass the material ID
+                success: function(response) {
+                    console.log('Delete response: ', response);  // Debug log
+                    let data = JSON.parse(response);  // Parse the JSON response
+                    Swal.fire({
+                        title: data.status === 'success' ? 'Deleted!' : 'Error',
+                        text: data.message,
+                        icon: data.status
+                    }).then(() => {
+                        if (data.status === 'success') {
+                            // Remove the deleted file's row from the table without reloading the page
+                            $('#fileRow' + materialId).remove();
+                        }
+                    });
+                },
+                error: function() {
+                    Swal.fire('Error', 'An unexpected error occurred while deleting the file.', 'error');
+                }
+            });
+        }
+    });
+}

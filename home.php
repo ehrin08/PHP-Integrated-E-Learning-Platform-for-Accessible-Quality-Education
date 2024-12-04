@@ -59,7 +59,6 @@ $files = $crud->readAllFiles();
                             <th>Preview</th>
                             <th>Contributor</th>
                             <th>Upload Date</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,16 +80,7 @@ $files = $crud->readAllFiles();
                                     echo htmlspecialchars($file['upload_date'] ?? 'N/A');
                                     ?>
                                 </td>
-                                <td>
-                                    <span>
-                                        <form method="POST" action="b-delete.php" style="display:inline;">
-                                            <input type="hidden" name="material_id" value="<?php echo $file['material_id']; ?>" />
-                                            <button type="submit" name="btndelete" style="border: none; background: transparent; padding: 0; cursor: pointer;">
-                                                <i class="fa fa-trash" style="color: #dc3545; font-size: 20px;"></i>
-                                            </button>
-                                        </form>
-                                    </span>
-                                </td>
+                            
 
                             </tr>
                         <?php endforeach; ?>
