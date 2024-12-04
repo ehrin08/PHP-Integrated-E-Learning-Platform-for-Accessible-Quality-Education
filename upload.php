@@ -1,12 +1,14 @@
 <?php
 session_start();
 
-
+// Check if user is logged in
 if (!isset($_SESSION['username'])) {
+    // Redirect to login page if not logged in
     header('Location: login.php');
     exit();
 }
 
+// Include database connection and CRUD class
 require_once 'dbConnection.php';
 require_once 'b-crud.php';
 
@@ -14,13 +16,15 @@ $database = new databaseConn();
 $db = $database->connect();
 $crud = new crud($db);
 
+// Fetch account_id of the logged-in user
 $username = $_SESSION['username'];
 $accountId = $crud->getAccountIdByUsername($username);
 
 if ($accountId) {
+    // Fetch uploaded files specific to the logged-in user
     $files = $crud->readFile($accountId);
 } else {
-    $files = []; 
+    $files = []; // No files if account_id not found
 }
 ?>
 <!DOCTYPE html>
@@ -35,7 +39,6 @@ if ($accountId) {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
     <script>
         $(document).ready(function() {
@@ -51,7 +54,6 @@ if ($accountId) {
         </a>
     </nav>
     <div class="front">
-    <a href="home.php" class="btn btn-secondary mb-3">Back</a>
         <h3 style="padding: 40px;">Upload File</h3>
         <form action="b-upload.php" method="post" enctype="multipart/form-data">
             <input type="file" name="document" class="form-control" required accept=".pdf">
@@ -70,7 +72,6 @@ if ($accountId) {
                             <th>Preview</th>
                             <th>Contributor</th>
                             <th>Upload Date</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,21 +87,6 @@ if ($accountId) {
                                 <td>
                                     <?php echo htmlspecialchars($file['upload_date'] ?? 'N/A'); ?>
                                 </td>
-                                <td>
-                                   <a href="b-update.php?material_id=<?php echo $file['material_id']; ?>" class="btn btn-primary">Edit</a>
-                                </td>
-                                <td>
-                                    <span>
-                                        <form method="POST" action="b-delete.php" style="display:inline;">
-                                            <input type="hidden" name="material_id" value="<?php echo $file['material_id']; ?>" />
-                                            <button type="submit" name="btndelete" style="border: none; background: transparent; padding: 0; cursor: pointer;">
-                                                <i class="fa fa-trash" style="color: #dc3545; font-size: 20px;"></i>
-                                            </button>
-                                        </form>
-                                    </span>
-                                </td>
-
-
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
