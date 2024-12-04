@@ -6,18 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js"></script> <!-- Include the reusable script -->
 </head>
 
 <body>
     <nav>
-        <a href="index.php"><h3>EmpowerEd</h3></a>
+        <a href="index.php">
+            <h3>EmpowerEd</h3>
+        </a>
     </nav>
     <div class="front">
         <h4 style="padding: 40px;">Create Account</h4>
-        <form id="signUpForm">
+        <form id="signUpForm" onsubmit="return handleSignUpFormSubmission(event)">
             <label for="username">Username:</label>
             <input type="text" class="form-control" id="username" name="username" required>
 
@@ -33,28 +36,6 @@
         </form>
     </div>
 
-    <script>
-        $('#signUpForm').on('submit', function(e) {
-            e.preventDefault();
-            $.ajax({
-                url: 'b-signUp.php',
-                type: 'POST',
-                data: $(this).serialize(),
-                success: function(response) {
-                    Swal.fire({
-                        title: response.status === 'success' ? 'Success!' : 'Error',
-                        text: response.message,
-                        icon: response.status
-                    }).then(() => {
-                        if (response.redirect) window.location.href = response.redirect;
-                    });
-                },
-                error: function() {
-                    Swal.fire('Error', 'An unexpected error occurred.', 'error');
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>
