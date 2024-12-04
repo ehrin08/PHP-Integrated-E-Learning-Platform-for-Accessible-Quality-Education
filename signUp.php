@@ -13,22 +13,20 @@
 
 <body>
     <nav>
-        <a href="index.php">
-            <h3>EmpowerEd</h3>
-        </a>
+        <a href="index.php"><h3>EmpowerEd</h3></a>
     </nav>
     <div class="front">
         <h4 style="padding: 40px;">Create Account</h4>
         <form id="signUpForm">
             <label for="username">Username:</label>
             <input type="text" class="form-control" id="username" name="username" required>
-            <br><br>
+
             <label for="email">Email:</label>
-            <input type="text" class="form-control" id="email" name="email" required>
-            <br><br>
+            <input type="email" class="form-control" id="email" name="email" required>
+
             <label for="password">Password:</label>
             <input type="password" class="form-control" id="password" name="password" required>
-            <br><br>
+
             <div class="center">
                 <button type="submit" class="btns">Create Account</button>
             </div>
@@ -36,30 +34,24 @@
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('#signUpForm').on('submit', function(event) {
-                event.preventDefault(); // Prevent default form submission
-                const formData = {
-                    username: $('#username').val(),
-                    email: $('#email').val(),
-                    password: $('#password').val()
-                };
-
-                $.ajax({
-                    url: 'b-signUp.php',
-                    type: 'POST',
-                    data: formData,
-                    success: function(response) {
-                        $('body').html(response); // Render SweetAlert or page redirection
-                    },
-                    error: function(xhr, status, error) {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'An error occurred: ' + error,
-                            icon: 'error'
-                        });
-                    }
-                });
+        $('#signUpForm').on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: 'b-signUp.php',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(response) {
+                    Swal.fire({
+                        title: response.status === 'success' ? 'Success!' : 'Error',
+                        text: response.message,
+                        icon: response.status
+                    }).then(() => {
+                        if (response.redirect) window.location.href = response.redirect;
+                    });
+                },
+                error: function() {
+                    Swal.fire('Error', 'An unexpected error occurred.', 'error');
+                }
             });
         });
     </script>
