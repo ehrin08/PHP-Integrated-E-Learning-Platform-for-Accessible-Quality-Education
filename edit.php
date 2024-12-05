@@ -1,3 +1,28 @@
+<?php
+include_once 'dbConnection.php';  // Include the database connection class
+include_once 'b-crud.php';  // Include the CRUD class
+
+// Create a new database connection
+$database = new databaseConn();
+$db = $database->connect();
+
+if (!isset($_GET['material_id']) || empty($_GET['material_id'])) {
+    header("Location: upload.php?error=missing_id");
+    exit;
+}
+
+$material_id = (int)$_GET['material_id'];  // Ensure material_id is an integer
+$crud = new Crud($db);
+
+// Fetch the current file details (excluding the BLOB content if not needed)
+$file = $crud->getFile($material_id);
+
+if (!$file) {
+    header("Location: upload.php?error=file_not_found");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,15 +34,21 @@
 </head>
 <body>
     <nav>
-        <h3>EmpowerEd</h3> 
+        <h3>EmpowerEd</h3>
     </nav>
     <div class="container">
-        <h3 class="text-center mt-5 mb-1">Edit Uploaded File</h3> 
-        <p class="text-center mt-1 mb-4">Click update after changing any information.</p> 
-        <form action="b-update.php?material_id=<?php echo $material_id; ?>" method="post" enctype="multipart/form-data">
+        <h3 class="text-center mt-5 mb-1">Edit Uploaded File</h3>
+        <p class="text-center mt-1 mb-4">Click update after changing any information.</p>
+        <form action="b-edit.php?material_id=<?php echo $material_id; ?>" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">Title:</label>
-                <input type="text" name="title" id="title" class="form-control" value="<?php echo htmlspecialchars($file['title']); ?>" required>
+                <input type="text" name="title" id="title" class="form-control" 
+                    value="<?php echo htmlspecialchars($file['title']); ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="current_file">Current File:</label>
+                <p><a href="view_file.php?material_id=<?php echo $material_id; ?>" target="_blank">
+                    View Current File</a></p>
             </div>
             <div class="form-group">
                 <label for="document">Replace File (optional):</label>

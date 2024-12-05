@@ -3,7 +3,7 @@
 class crud
 {
     private $conn;
-    private $accountTable = "account"; 
+    private $accountTable = "account";
     private $materialsTable = "learning_materials";
 
     public $id;
@@ -59,7 +59,7 @@ class crud
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':document', $fileData, PDO::PARAM_LOB); 
+        $stmt->bindParam(':document', $fileData, PDO::PARAM_LOB);
         $stmt->bindParam(':contributor', $uploader);
         $stmt->bindParam(':account_id', $accountId);
 
@@ -75,13 +75,14 @@ class crud
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function readAllFiles() {
+    public function readAllFiles()
+    {
         $query = "SELECT material_id, title, contributor, upload_date FROM " . $this->materialsTable;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
 
     public function getFile($material_id)
     {
@@ -99,15 +100,40 @@ class crud
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $user ? $user['account_id'] : null; 
+        return $user ? $user['account_id'] : null;
     }
     public function deleteFile($material_id): bool
     {
         $query = "DELETE FROM " . $this->materialsTable . " WHERE material_id = :material_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
-        return $stmt->execute(); 
+        return $stmt->execute();
     }
 
-    
+    public function updateFile($material_id, $title, $fileData = null)
+    {
+        // Base query for updating the title
+        $query = "UPDATE " . $this->materialsTable . " SET title = :title";
+
+        // Add file update to the query only if file data is provided
+        if ($fileData !== null) {
+            $query .= ", document = :document";
+        }
+
+        $query .= " WHERE material_id = :material_id";
+
+        // Prepare the statement
+        $stmt = $this->conn->prepare($query);
+
+        // Bind parameters
+        $stmt->bindParam(':title', $title);
+        if ($fileData !== null) {
+            $stmt->bindParam(':document', $fileData, PDO::PARAM_LOB);
+        }
+        $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
+
+        // Execute the query and return the result
+        return $stmt->execute();
+    }
+
 }
