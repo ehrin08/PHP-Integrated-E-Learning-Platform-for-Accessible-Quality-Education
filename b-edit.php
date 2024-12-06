@@ -1,7 +1,6 @@
 <?php
-include_once 'dbConnection.php';  // Include the database connection class
-include_once 'b-crud.php';  // Include the CRUD class
-include_once 'sweetAlert.php';  // Include SweetAlert
+require_once 'dbConnection.php';  // Include the database connection class
+require_once 'b-crud.php';  // Include the CRUD class
 
 header('Content-Type: application/json'); // Set the response header to JSON
 

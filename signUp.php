@@ -20,7 +20,7 @@
     </nav>
     <div class="front">
         <h4 style="padding: 40px;">Create Account</h4>
-        <form id="signUpForm" onsubmit="return handleSignUpFormSubmission(event)">
+        <form id="signUpForm" onsubmit="handleSignUpFormSubmission(event)">
             <label for="username">Username:</label>
             <input type="text" class="form-control" id="username" name="username" required>
 

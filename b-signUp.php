@@ -2,7 +2,7 @@
 require_once 'dbConnection.php';
 require_once 'b-crud.php';
 
-header('Content-Type: application/json');
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header('Content-Type: application/json');
@@ -21,8 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode(['status' => 'error', 'message' => 'Something went wrong!']);
         }
     } catch (PDOException $e) {
-        $message = strpos($e->getMessage(), 'username') !== false ? 'Username already exists!' :
-                   (strpos($e->getMessage(), 'email') !== false ? 'Email already exists!' : 'An unexpected error occurred.');
+        $message = strpos($e->getMessage(), 'username') !== false ? 'Username already exists!' : (strpos($e->getMessage(), 'email') !== false ? 'Email already exists!' : 'An unexpected error occurred.');
         echo json_encode(['status' => 'error', 'message' => $message]);
     }
 }

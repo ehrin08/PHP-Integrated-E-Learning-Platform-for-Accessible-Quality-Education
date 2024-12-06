@@ -21,12 +21,15 @@ class crud
     public function signUp()
     {
 
+        // Hash the password
+        $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
+
         $query = "INSERT INTO " . $this->accountTable . " (username, email, password) VALUES (:username, :email, :password)";
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':username', $this->username);
         $stmt->bindParam(':email', $this->email);
-        $stmt->bindParam(':password', $this->password);
+        $stmt->bindParam(':password', $hashedPassword);
 
         if ($stmt->execute()) {
             return true;
@@ -36,21 +39,20 @@ class crud
 
     public function login()
     {
-        $query = "SELECT * FROM " . $this->accountTable;
+        $query = "SELECT * FROM " . $this->accountTable . " WHERE email = :email";
         $stmt = $this->conn->prepare($query);
 
+        $stmt->bindParam(':email', $this->email);
         $stmt->execute();
-        $num = $stmt->rowCount();
 
-        if ($num > 0) {
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                if ($this->email == htmlspecialchars($row['email']) && $this->password == htmlspecialchars($row['password'])) {
-                    session_start();
-                    $_SESSION['username'] = $row['username'];
-                    return true;
-                }
-            }
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user && password_verify($this->password, $user['password'])) {
+            session_start();
+            $_SESSION['username'] = $user['username'];
+            return true;
         }
+
         return false;
     }
 
@@ -103,7 +105,8 @@ class crud
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         return $user ? $user['account_id'] : null;
     }
-    public function deleteFile($material_id): bool
+
+    public function deleteFile($material_id)
     {
         $query = "DELETE FROM " . $this->materialsTable . " WHERE material_id = :material_id";
         $stmt = $this->conn->prepare($query);
@@ -141,12 +144,12 @@ class crud
     {
         $query = "INSERT INTO " . $this->feedbacksTable . " (material_id, comment, contributors_name) VALUES (:material_id, :comment, :contributors_name)";
         $stmt = $this->conn->prepare($query);
-    
+
         // Bind the parameters
         $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
         $stmt->bindParam(':comment', $comment);
         $stmt->bindParam(':contributors_name', $contributor_name);
-    
+
         // Execute the query and check for success
         if ($stmt->execute()) {
             return true;
@@ -156,7 +159,7 @@ class crud
             return false;
         }
     }
-    
+
 
     public function getFeedbacks($material_id)
     {

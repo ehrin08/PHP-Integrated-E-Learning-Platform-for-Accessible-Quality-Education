@@ -66,7 +66,7 @@ $files = $crud->readAllFiles();
                             <tr>
                                 <td><?php echo htmlspecialchars($file['title']); ?></td>
                                 <td>
-                                    <a href="ViewFile.php?material_id=<?php echo $file['material_id']; ?>" target="_blank">View</a>
+                                    <a href="viewFile.php?material_id=<?php echo $file['material_id']; ?>">View</a>
                                 </td>
                                 <td>
                                     <?php
