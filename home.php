@@ -61,7 +61,6 @@ $files = $crud->readAllFiles();
                             <th>Preview</th>
                             <th>Contributor</th>
                             <th>Upload Date</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,7 +68,7 @@ $files = $crud->readAllFiles();
                             <tr>
                                 <td><?php echo htmlspecialchars($file['title']); ?></td>
                                 <td>
-                                    <a href="view_file.php?material_id=<?php echo $file['material_id']; ?>" target="_blank">View</a>
+                                    <a href="ViewFile.php?material_id=<?php echo $file['material_id']; ?>" target="_blank">View</a>
                                 </td>
                                 <td>
                                     <?php
@@ -84,15 +83,6 @@ $files = $crud->readAllFiles();
                                     ?>
                                 </td>
                                 <td>
-                                    <!-- Edit Icon -->
-                                    <span>
-                                        <a href="edit.php?id=1" title="Edit">
-                                            <i class="fa fa-edit" style="color: #007bff; cursor: pointer;"></i>
-                                        </a>
-                                    </span>
-
-                                    <!-- Delete Icon -->
-                                    
                                     <span>
                                         <form method="POST" action="b-delete.php" style="display:inline;">
                                             <input type="hidden" name="material_id" value="<?php echo $file['material_id']; ?>" />

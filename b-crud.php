@@ -2,9 +2,10 @@
 
 class crud
 {
-    private $conn; //connection
-    private $accountTable = "account"; //account table
+    private $conn;
+    private $accountTable = "account"; 
     private $materialsTable = "learning_materials";
+    private $feedbacksTable = "feedback";
 
     public $id;
     public $username;
@@ -59,7 +60,7 @@ class crud
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':document', $fileData, PDO::PARAM_LOB); // For blob
+        $stmt->bindParam(':document', $fileData, PDO::PARAM_LOB); 
         $stmt->bindParam(':contributor', $uploader);
         $stmt->bindParam(':account_id', $accountId);
 
@@ -68,24 +69,25 @@ class crud
 
     public function readFile($accountId)
     {
-        $query = "SELECT material_id, title, contributor, upload_date FROM " . $this->materialsTable . " WHERE account_id = :account_id";
+        $query = "SELECT * FROM " . $this->materialsTable . " WHERE account_id = :account_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':account_id', $accountId);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function readAllFiles() {
-        $query = "SELECT material_id, title, contributor, upload_date FROM " . $this->materialsTable;
+    public function readAllFiles()
+    {
+        $query = "SELECT * FROM " . $this->materialsTable;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
 
     public function getFile($material_id)
     {
-        $query = "SELECT title, document FROM " . $this->materialsTable . " WHERE material_id = :material_id";
+        $query = "SELECT * FROM " . $this->materialsTable . " WHERE material_id = :material_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -94,20 +96,40 @@ class crud
 
     public function getAccountIdByUsername($username)
     {
-        $query = "SELECT account_id FROM " . $this->accountTable . " WHERE username = :username";
+        $query = "SELECT * FROM " . $this->accountTable . " WHERE username = :username";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $user ? $user['account_id'] : null; // Return account_id or null if not found
+        return $user ? $user['account_id'] : null; 
     }
     public function deleteFile($material_id): bool
     {
         $query = "DELETE FROM " . $this->materialsTable . " WHERE material_id = :material_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
-        return $stmt->execute(); // Returns true if successful, false otherwise
+        return $stmt->execute(); 
     }
 
+    public function updateFile($material_id, $title, $fileData = null)
+    {
+        $query = "UPDATE " . $this->materialsTable . " SET title = :title";
+
+        if ($fileData !== null) {
+            $query .= ", document = :document";
+        }
+
+        $query .= " WHERE material_id = :material_id";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':title', $title);
+        if ($fileData !== null) {
+            $stmt->bindParam(':document', $fileData, PDO::PARAM_LOB);
+        }
+        $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
     
 }

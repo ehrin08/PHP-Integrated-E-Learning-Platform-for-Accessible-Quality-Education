@@ -1,22 +1,25 @@
 <?php
 require_once 'dbConnection.php';
 require_once 'b-crud.php';
-require_once 'sweetAlert.php';
+
+header('Content-Type: application/json');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $database = new databaseConn();
-    $db = $database->connect();
+    try {
+        $database = new databaseConn();
+        $db = $database->connect();
 
-    $login = new crud($db);
+        $login = new crud($db);
 
+        $login->email = htmlspecialchars(trim($_POST['email']));
+        $login->password = htmlspecialchars(trim($_POST['password']));
 
-    $login->email = htmlspecialchars(trim($_POST['email']));
-    $login->password = htmlspecialchars(trim($_POST['password']));
-
-    if ($login->login()) {
-        header('location: home.php');
-        exit;
-    } else {
-        echo sweetAlert('Oops...', 'Something went wrong!', 'error', 'login.php');
+        if ($login->login()) {
+            echo json_encode(['status' => 'success', 'message' => 'Login successful!', 'redirect' => 'home.php']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid email or password.']);
+        }
+    } catch (Exception $e) {
+        echo json_encode(['status' => 'error', 'message' => 'An error occurred: ' . $e->getMessage()]);
     }
 }

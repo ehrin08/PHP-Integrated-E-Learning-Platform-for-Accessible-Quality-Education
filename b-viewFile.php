@@ -2,12 +2,12 @@
 session_start();
 require_once 'dbConnection.php';
 require_once 'b-crud.php';
-
-if (isset($_GET['material_id'])) {
-    $material_id = intval($_GET['material_id']);
-    $database = new databaseConn();
+$database = new databaseConn();
     $conn = $database->connect();
     $crud = new Crud($conn);
+if (isset($_GET['material_id'])) {
+    $material_id = intval($_GET['material_id']);
+    
 
     // Fetch the file from the database
     $file = $crud->getFile($material_id);
