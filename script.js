@@ -32,7 +32,7 @@ function handleSignUpFormSubmission(event) {
     event.preventDefault(); // Prevent the default form submission
     handleFormSubmission('signUpForm', 'b-signUp.php', function (response) {
         Swal.fire({
-            title: response.status === 'error' ? 'Success!' : 'Error',
+            title: response.status === 'success' ? 'Success!' : 'Error',
             text: response.message,
             icon: response.status
         }).then(() => {

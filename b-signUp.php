@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $signUp = new crud($db);
         $signUp->username = htmlspecialchars(trim($_POST['username']));
         $signUp->email = htmlspecialchars(trim($_POST['email']));
-        $signUp->password = htmlspecialchars(trim($_POST['password']));
+        $signUp->password = htmlspecialchars(trim($_POST['password'])); 
 
         if ($signUp->signUp()) {
             echo json_encode(['status' => 'success', 'message' => 'Account created successfully!', 'redirect' => 'login.php']);
