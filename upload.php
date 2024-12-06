@@ -24,7 +24,7 @@ if ($accountId) {
     // Fetch uploaded files specific to the logged-in user
     $files = $crud->readFile($accountId);
 } else {
-    $files = []; 
+    $files = [];
 }
 ?>
 <!DOCTYPE html>
@@ -81,17 +81,8 @@ if ($accountId) {
                                 <td><?php echo htmlspecialchars($file['contributor'] ?? 'Unknown'); ?></td>
                                 <td><?php echo htmlspecialchars($file['upload_date'] ?? 'N/A'); ?></td>
                                 <td>
-                                   <a href="b-update.php?material_id=<?php echo $file['material_id']; ?>" class="btn btn-primary">Edit</a>
-                                </td>
-                                <td>
-                                    <span>
-                                        <form method="POST" action="b-delete.php" style="display:inline;">
-                                            <input type="hidden" name="material_id" value="<?php echo $file['material_id']; ?>" />
-                                            <button type="submit" name="btndelete" style="border: none; background: transparent; padding: 0; cursor: pointer;">
-                                                <i class="fa fa-trash" style="color: #dc3545; font-size: 20px;"></i>
-                                            </button>
-                                        </form>
-                                    </span>
+                                    <a href="edit.php?material_id=<?php echo $file['material_id']; ?>" class="btn btn-primary">Edit</a>
+                                    <a href="javascript:void(0);" onclick="deleteFile(<?php echo $file['material_id']; ?>)" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

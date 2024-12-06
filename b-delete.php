@@ -8,11 +8,13 @@ $conn = $database->connect();
 
 $crud = new Crud($conn);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btndelete'])) {
-    $material_id = $_POST['material_id'];
-    $deleteRecord = new crud($conn);
+// Check if the material_id is passed via GET and it's set
+if (isset($_GET['material_id'])) {
+    $material_id = $_GET['material_id'];
+    $deleteRecord = new Crud($conn);
     $deleteRecord->id = $material_id;
 
+    // Check if the deletion is successful
     if ($deleteRecord->deleteFile($material_id)) {
         echo json_encode([
             'status' => 'success',

@@ -3,7 +3,7 @@
 class crud
 {
     private $conn;
-    private $accountTable = "account"; 
+    private $accountTable = "account";
     private $materialsTable = "learning_materials";
     private $feedbacksTable = "feedback";
 
@@ -60,7 +60,7 @@ class crud
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':document', $fileData, PDO::PARAM_LOB); 
+        $stmt->bindParam(':document', $fileData, PDO::PARAM_LOB);
         $stmt->bindParam(':contributor', $uploader);
         $stmt->bindParam(':account_id', $accountId);
 
@@ -101,35 +101,69 @@ class crud
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $user ? $user['account_id'] : null; 
+        return $user ? $user['account_id'] : null;
     }
     public function deleteFile($material_id): bool
     {
         $query = "DELETE FROM " . $this->materialsTable . " WHERE material_id = :material_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
-        return $stmt->execute(); 
+        return $stmt->execute();
     }
 
     public function updateFile($material_id, $title, $fileData = null)
     {
+        // Base query for updating the title
         $query = "UPDATE " . $this->materialsTable . " SET title = :title";
 
+        // Add file update to the query only if file data is provided
         if ($fileData !== null) {
             $query .= ", document = :document";
         }
 
         $query .= " WHERE material_id = :material_id";
 
+        // Prepare the statement
         $stmt = $this->conn->prepare($query);
 
+        // Bind parameters
         $stmt->bindParam(':title', $title);
         if ($fileData !== null) {
             $stmt->bindParam(':document', $fileData, PDO::PARAM_LOB);
         }
         $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
 
+        // Execute the query and return the result
         return $stmt->execute();
     }
+
+    public function addFeedback($material_id, $comment, $contributor_name)
+    {
+        $query = "INSERT INTO " . $this->feedbacksTable . " (material_id, comment, contributors_name) VALUES (:material_id, :comment, :contributors_name)";
+        $stmt = $this->conn->prepare($query);
     
+        // Bind the parameters
+        $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
+        $stmt->bindParam(':comment', $comment);
+        $stmt->bindParam(':contributors_name', $contributor_name);
+    
+        // Execute the query and check for success
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            // Add error handling
+            print_r($stmt->errorInfo());
+            return false;
+        }
+    }
+    
+
+    public function getFeedbacks($material_id)
+    {
+        $query = "SELECT * FROM " . $this->feedbacksTable . " WHERE material_id = :material_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
