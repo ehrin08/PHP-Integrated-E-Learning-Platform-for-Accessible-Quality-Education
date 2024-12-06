@@ -1,7 +1,8 @@
 <?php
-include_once 'dbConnection.php'; 
-include_once 'b-crud.php';  
+include_once 'dbConnection.php';  // Include the database connection class
+include_once 'b-crud.php';  // Include the CRUD class
 
+// Create a new database connection
 $database = new databaseConn();
 $db = $database->connect();
 
@@ -10,9 +11,10 @@ if (!isset($_GET['material_id']) || empty($_GET['material_id'])) {
     exit;
 }
 
-$material_id = (int)$_GET['material_id'];  
+$material_id = (int)$_GET['material_id'];  // Ensure material_id is an integer
 $crud = new Crud($db);
 
+// Fetch the current file details (excluding the BLOB content if not needed)
 $file = $crud->getFile($material_id);
 
 if (!$file) {
@@ -49,10 +51,12 @@ if (!$file) {
         <h3 class="text-center mt-5 mb-1">Edit Uploaded File</h3>
         <p class="text-center mt-1 mb-4">Click update after changing any information.</p>
 
+        <!-- Display error if exists -->
         <?php if (isset($error)): ?>
             <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
 
+        <!-- Form for editing the file -->
         <form id="editForm" onsubmit="handleEditFile(event, <?php echo $material_id; ?>)" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">Title:</label>
@@ -61,7 +65,7 @@ if (!$file) {
             </div>
             <div class="form-group">
                 <label for="current_file">Current File:</label>
-                <p><a href="b-viewFile.php?material_id=<?php echo $material_id; ?>" target="_blank">
+                <p><a href="ViewFile.php?material_id=<?php echo $material_id; ?>" target="_blank">
                         View Current File</a></p>
             </div>
             <div class="form-group">

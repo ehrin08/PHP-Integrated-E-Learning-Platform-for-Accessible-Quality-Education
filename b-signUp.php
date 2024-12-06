@@ -21,8 +21,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode(['status' => 'error', 'message' => 'Something went wrong!']);
         }
     } catch (PDOException $e) {
-        $message = strpos($e->getMessage(), 'username') !== false ? 'Username already exists!' :
-                   (strpos($e->getMessage(), 'email') !== false ? 'Email already exists!' : 'An unexpected error occurred.');
-        echo json_encode(['status' => 'error', 'message' => $message]);
+        if ($e->getCode() == 23000) { 
+            if (strpos($e->getMessage(), 'username') !== false) {
+                echo sweetAlert('Error', 'Username already exists! Please choose a different one.', 'warning', 'signUp.php');
+            } elseif (strpos($e->getMessage(), 'email') !== false) {
+                echo sweetAlert('Error', 'Email already exists! Please use a different one.', 'warning', 'signUp.php');
+            } else {
+                echo sweetAlert('Error', 'A unique constraint was violated.', 'error', 'signUp.php');
+            }
+        } else {
+            echo sweetAlert('Error', 'An unexpected error occurred: ' . $e->getMessage(), 'error');
+        }
     }
 }
+?>

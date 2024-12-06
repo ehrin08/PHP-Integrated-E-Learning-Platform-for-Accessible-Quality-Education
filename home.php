@@ -59,7 +59,6 @@ $files = $crud->readAllFiles();
                             <th>Preview</th>
                             <th>Contributor</th>
                             <th>Upload Date</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,7 +66,7 @@ $files = $crud->readAllFiles();
                             <tr>
                                 <td><?php echo htmlspecialchars($file['title']); ?></td>
                                 <td>
-                                    <a href="view_file.php?material_id=<?php echo $file['material_id']; ?>" target="_blank">View</a>
+                                    <a href="ViewFile.php?material_id=<?php echo $file['material_id']; ?>" target="_blank">View</a>
                                 </td>
                                 <td>
                                     <?php
