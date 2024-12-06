@@ -109,5 +109,25 @@ class crud
         return $stmt->execute(); 
     }
 
+    public function updateFile($material_id, $title, $fileData = null)
+    {
+        $query = "UPDATE " . $this->materialsTable . " SET title = :title";
+
+        if ($fileData !== null) {
+            $query .= ", document = :document";
+        }
+
+        $query .= " WHERE material_id = :material_id";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':title', $title);
+        if ($fileData !== null) {
+            $stmt->bindParam(':document', $fileData, PDO::PARAM_LOB);
+        }
+        $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
     
 }
