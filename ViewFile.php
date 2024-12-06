@@ -56,7 +56,6 @@ if (isset($_GET['material_id'])) {
         </a>
     </nav>
     <div class="front">
-        <a href="home.php">Home</a>
         <table style="width: 100%; ">
             <tr>
                 <td style="width: 50%; height: 85vh; vertical-align: top; padding:40px;">
@@ -68,15 +67,17 @@ if (isset($_GET['material_id'])) {
 
                     <!-- Feedback Form -->
                     <h3>Add Feedback</h3>
-                    <form id="feedbackForm" onsubmit="submitFeedback(event)">
+                    <br>
+                    <form id="feedbackForm" onsubmit="submitFeedback(event)" style="width: 80%;">
                         <input type="hidden" name="material_id" value="<?php echo $material_id; ?>" />
                         <div class="form-group">
                             <textarea name="comment" class="form-control" rows="4" placeholder="Add your feedback here..." required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit Feedback</button>
                     </form>
-
+                    <br>
                     <h3>Feedbacks</h3>
+                    <br>
                     <iframe src="feedback.php?material_id=<?php echo $material_id; ?>" width="100%" height="400px" style="border: none;"></iframe>
 
                 </td>

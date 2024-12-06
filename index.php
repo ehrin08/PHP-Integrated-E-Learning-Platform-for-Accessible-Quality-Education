@@ -9,112 +9,116 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<head>
-    <style>
-        /* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
 
-/* Navigation Bar */
-nav {
-    text-align: center;
-    padding: 20px;
-    box-shadow: 0 0.5px 10px 4px #dddddd;
-}
+    <head>
+        <style>
+            /* General Reset */
+            * {
+                margin: 0;
+                padding: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
 
-nav a,
-nav a:hover {
-    text-decoration: none;
-    color: #ff8032;
-}
+            /* Navigation Bar */
+            nav {
+                text-align: center;
+                padding: 20px;
+                box-shadow: 0 0.5px 10px 4px #dddddd;
+            }
 
-/* Body Layout */
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f9f9f9;
-}
+            nav a,
+            nav a:hover {
+                text-decoration: none;
+                color: #ff8032;
+            }
 
-/* Container for Squares */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    padding: 0; /* Reduced gap between squares */
-}
+            /* Body Layout */
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #f9f9f9;
+            }
 
-/* Square Styles */
-.square {
-    width: 400px; /* Increased width */
-    height: 400px; /* Increased height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #ccc;
-    background-color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
+            /* Container for Squares */
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0;
+                padding: 0;
+                /* Reduced gap between squares */
+            }
 
-/* Image Inside Square */
-.square img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-}
+            /* Square Styles */
+            .square {
+                width: 400px;
+                /* Increased width */
+                height: 400px;
+                /* Increased height */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid #ccc;
+                background-color: white;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+            }
 
-/* Button Container */
-.btn-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Space between buttons */
-    align-items: center;
-}
+            /* Image Inside Square */
+            .square img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 10px;
+            }
 
-/* Button Styles */
-.btn-container a {
-    display: inline-block;
-    text-align: center;
-    text-decoration: none;
-    padding: 15px;
-    border: none;
-    color: white;
-    background-color: #ff8032;
-    border-radius: 5px;
-    font-size: 18px;
-    transition: all 0.3s ease;
-    width: 200px; /* Increased button width */
-    text-transform: uppercase;
-}
+            /* Button Container */
+            .btn-container {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                /* Space between buttons */
+                align-items: center;
+            }
 
-.btn-container a:hover {
-    background-color: #ff9d5c;
-    transform: scale(1.05);
-}
+            /* Button Styles */
+            .btn-container a {
+                display: inline-block;
+                text-align: center;
+                text-decoration: none;
+                padding: 15px;
+                border: none;
+                color: white;
+                background-color: #ff8032;
+                border-radius: 5px;
+                font-size: 18px;
+                transition: all 0.3s ease;
+                width: 200px;
+                /* Increased button width */
+                text-transform: uppercase;
+            }
 
-    </style>
+            .btn-container a:hover {
+                background-color: #ff9d5c;
+                transform: scale(1.05);
+            }
+        </style>
 
-<body>
-    <div class="container">
-        <div class="square">
-            <img src="empowered.jpg" alt="">
-        </div>
-        <div class="square">
-            <div class="btn-container">
-                <a href="login.php">Login</a>
-                <a href="signUp.php">Sign Up</a>
+    <body>
+        <div class="container">
+            <div class="square">
+                <img src="./source/empowered.jpg" alt="">
+            </div>
+            <div class="square">
+                <div class="btn-container">
+                    <a href="login.php">Login</a>
+                    <a href="signUp.php">Sign Up</a>
+                </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 
 </html>
-

@@ -3,12 +3,10 @@ session_start();
 
 // Check if user is logged in
 if (!isset($_SESSION['username'])) {
-    // Redirect to login page if not logged in
     header('Location: login.php');
     exit();
 }
 
-// Include database connection and CRUD class
 require_once 'dbConnection.php';
 require_once 'b-crud.php';
 
@@ -16,12 +14,10 @@ $database = new databaseConn();
 $db = $database->connect();
 $crud = new crud($db);
 
-// Fetch account_id of the logged-in user
 $username = $_SESSION['username'];
 $accountId = $crud->getAccountIdByUsername($username);
 
 if ($accountId) {
-    // Fetch uploaded files specific to the logged-in user
     $files = $crud->readFile($accountId);
 } else {
     $files = [];
@@ -77,7 +73,7 @@ if ($accountId) {
                         <?php foreach ($files as $file): ?>
                             <tr id="fileRow<?php echo $file['material_id']; ?>">
                                 <td><?php echo htmlspecialchars($file['title']); ?></td>
-                                <td><a href="ViewFile.php?material_id=<?php echo $file['material_id']; ?>" target="_blank">View</a></td>
+                                <td><a href="viewFile.php?material_id=<?php echo $file['material_id']; ?>">View</a></td>
                                 <td><?php echo htmlspecialchars($file['contributor'] ?? 'Unknown'); ?></td>
                                 <td><?php echo htmlspecialchars($file['upload_date'] ?? 'N/A'); ?></td>
                                 <td>

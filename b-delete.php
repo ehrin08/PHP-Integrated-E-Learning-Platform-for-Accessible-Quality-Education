@@ -12,7 +12,7 @@ $crud = new Crud($conn);
 if (isset($_GET['material_id'])) {
     $material_id = $_GET['material_id'];
     $deleteRecord = new Crud($conn);
-    $deleteRecord->id = $material_id;
+    //$deleteRecord->id = $material_id;
 
     // Check if the deletion is successful
     if ($deleteRecord->deleteFile($material_id)) {
