@@ -189,3 +189,80 @@ function deleteFile(materialId) {
         }
     });
 }
+/**
+ * Handles the submission of the edit form using AJAX.
+ * @param {Event} event - The form submission event.
+ * @param {number} materialId - The ID of the material being edited.
+ */
+function handleEditFile(event, materialId) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Create FormData to include file uploads
+    var formData = new FormData($('#editForm')[0]);
+
+    $.ajax({
+        url: 'b-edit.php?material_id=' + materialId,
+        type: 'POST',
+        data: formData,
+        processData: false, // Prevent jQuery from processing the data
+        contentType: false, // Prevent jQuery from setting contentType
+        success: function(response) {
+            Swal.fire({
+                title: response.status === 'success' ? 'Success!' : 'Error',
+                text: response.message,
+                icon: response.status
+            }).then(() => {
+                if (response.status === 'success') {
+                    window.location.href = 'upload.php'; // Redirect on success
+                }
+            });
+        },
+        error: function() {
+            Swal.fire('Error', 'An unexpected error occurred.', 'error');
+        }
+    });
+}
+// script.js
+
+
+/**
+ * Function to handle feedback form submission using AJAX
+ * @param {Event} event - The form submission event
+ */
+function submitFeedback(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    var formData = $('#feedbackForm').serialize(); // Serialize form data
+
+    $.ajax({
+        url: 'b-feedback.php',  // PHP script to process the feedback
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+            console.log('Raw response:', response); // Log raw response for debugging
+        
+            // No need to parse, response is already a JSON object
+            var data = response;
+        
+            console.log('Parsed data:', data); // Log parsed data to check structure
+        
+            if (data.status && data.message) {
+                Swal.fire({
+                    title: data.status === 'success' ? 'Success!' : 'Error',
+                    text: data.message,
+                    icon: data.status
+                }).then(() => {
+                    if (data.status === 'success') {
+                        // Optionally reload the feedbacks
+                        $('#feedbackForm')[0].reset(); // Clear the form
+                        location.reload(); // Reload the page
+                    }
+                });
+            } else {
+                // Handle case where response structure is unexpected
+                Swal.fire('Error', 'Unexpected response format.', 'error');
+            }
+        }
+        
+    });
+}

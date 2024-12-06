@@ -73,7 +73,7 @@ if ($accountId) {
                         <?php foreach ($files as $file): ?>
                             <tr id="fileRow<?php echo $file['material_id']; ?>">
                                 <td><?php echo htmlspecialchars($file['title']); ?></td>
-                                <td><a href="view_file.php?material_id=<?php echo $file['material_id']; ?>" target="_blank">View</a></td>
+                                <td><a href="ViewFile.php?material_id=<?php echo $file['material_id']; ?>" target="_blank">View</a></td>
                                 <td><?php echo htmlspecialchars($file['contributor'] ?? 'Unknown'); ?></td>
                                 <td><?php echo htmlspecialchars($file['upload_date'] ?? 'N/A'); ?></td>
                                 <td>
