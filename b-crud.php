@@ -5,7 +5,6 @@ class crud
     private $conn;
     private $accountTable = "account";
     private $materialsTable = "learning_materials";
-    private $feedbacksTable = "feedback";
 
     public $id;
     public $username;
@@ -69,7 +68,7 @@ class crud
 
     public function readFile($accountId)
     {
-        $query = "SELECT * FROM " . $this->materialsTable . " WHERE account_id = :account_id";
+        $query = "SELECT material_id, title, contributor, upload_date FROM " . $this->materialsTable . " WHERE account_id = :account_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':account_id', $accountId);
         $stmt->execute();
@@ -78,7 +77,7 @@ class crud
 
     public function readAllFiles()
     {
-        $query = "SELECT * FROM " . $this->materialsTable;
+        $query = "SELECT material_id, title, contributor, upload_date FROM " . $this->materialsTable;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -87,7 +86,7 @@ class crud
 
     public function getFile($material_id)
     {
-        $query = "SELECT * FROM " . $this->materialsTable . " WHERE material_id = :material_id";
+        $query = "SELECT title, document FROM " . $this->materialsTable . " WHERE material_id = :material_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -96,7 +95,7 @@ class crud
 
     public function getAccountIdByUsername($username)
     {
-        $query = "SELECT * FROM " . $this->accountTable . " WHERE username = :username";
+        $query = "SELECT account_id FROM " . $this->accountTable . " WHERE username = :username";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->execute();
@@ -137,33 +136,4 @@ class crud
         return $stmt->execute();
     }
 
-    public function addFeedback($material_id, $comment, $contributor_name)
-    {
-        $query = "INSERT INTO " . $this->feedbacksTable . " (material_id, comment, contributors_name) VALUES (:material_id, :comment, :contributors_name)";
-        $stmt = $this->conn->prepare($query);
-    
-        // Bind the parameters
-        $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
-        $stmt->bindParam(':comment', $comment);
-        $stmt->bindParam(':contributors_name', $contributor_name);
-    
-        // Execute the query and check for success
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            // Add error handling
-            print_r($stmt->errorInfo());
-            return false;
-        }
-    }
-    
-
-    public function getFeedbacks($material_id)
-    {
-        $query = "SELECT * FROM " . $this->feedbacksTable . " WHERE material_id = :material_id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 }
