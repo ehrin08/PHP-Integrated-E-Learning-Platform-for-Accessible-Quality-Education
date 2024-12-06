@@ -46,11 +46,6 @@ if (!$file) {
                     value="<?php echo htmlspecialchars($file['title']); ?>" required>
             </div>
             <div class="form-group">
-                <label for="current_file">Current File:</label>
-                <p><a href="view_file.php?material_id=<?php echo $material_id; ?>" target="_blank">
-                    View Current File</a></p>
-            </div>
-            <div class="form-group">
                 <label for="document">Replace File (optional):</label>
                 <input type="file" name="document" id="document" class="form-control" accept=".pdf">
             </div>
