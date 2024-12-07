@@ -1,14 +1,13 @@
 <?php
 session_start();
-require_once 'dbConnection.php';
+
 require_once 'b-crud.php';
 
 header('Content-Type: application/json'); // Set JSON response header
 
-$database = new databaseConn();
-$conn = $database->connect();
 
-$crud = new Crud($conn);
+
+$crud = new crud();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['document'])) {
     $title = $_POST['title'];
@@ -35,4 +34,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['document'])) {
         'message' => 'No file uploaded or invalid request.',
     ]);
 }
-?>

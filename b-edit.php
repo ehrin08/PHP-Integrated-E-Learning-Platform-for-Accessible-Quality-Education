@@ -1,13 +1,12 @@
 <?php
-require_once 'dbConnection.php';  // Include the database connection class
+  // Include the database connection class
 require_once 'b-crud.php';  // Include the CRUD class
 
 header('Content-Type: application/json'); // Set the response header to JSON
 
 // Create a new database connection
-$database = new databaseConn();
-$db = $database->connect();
-$crud = new Crud($db);
+
+$crud = new crud();
 
 // Validate material_id
 if (!isset($_GET['material_id']) || empty($_GET['material_id'])) {

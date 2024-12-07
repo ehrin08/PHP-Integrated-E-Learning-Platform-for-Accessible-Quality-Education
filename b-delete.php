@@ -1,17 +1,16 @@
 <?php
 session_start();
-require_once 'dbConnection.php';
+
 require_once 'b-crud.php';
 
-$database = new databaseConn();
-$conn = $database->connect();
 
-$crud = new Crud($conn);
+
+$crud = new crud();
 
 // Check if the material_id is passed via GET and it's set
 if (isset($_GET['material_id'])) {
     $material_id = $_GET['material_id'];
-    $deleteRecord = new Crud($conn);
+    $deleteRecord = new crud();;
     //$deleteRecord->id = $material_id;
 
     // Check if the deletion is successful

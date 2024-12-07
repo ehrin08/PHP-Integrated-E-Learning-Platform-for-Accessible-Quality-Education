@@ -1,15 +1,14 @@
 <?php
-require_once 'dbConnection.php';
+
 require_once 'b-crud.php';
 
 header('Content-Type: application/json');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
-        $database = new databaseConn();
-        $db = $database->connect();
+        
 
-        $login = new crud($db);
+        $login = new crud();
 
         $login->email = htmlspecialchars(trim($_POST['email']));
         $login->password = htmlspecialchars(trim($_POST['password']));

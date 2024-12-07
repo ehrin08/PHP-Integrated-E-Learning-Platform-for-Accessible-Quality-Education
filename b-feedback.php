@@ -1,14 +1,13 @@
 <?php
 session_start(); // Start session to access $_SESSION data
-require_once 'dbConnection.php';
+
 require_once 'b-crud.php';
 
 header('Content-Type: application/json'); // Set JSON response header
 
 // Create a database connection
-$database = new databaseConn();
-$conn = $database->connect();
-$crud = new Crud($conn);
+
+$crud = new crud();
 
 // Check if the request method is POST and feedback data is present
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

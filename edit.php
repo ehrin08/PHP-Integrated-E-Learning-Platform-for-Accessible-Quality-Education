@@ -1,12 +1,11 @@
 <?php
 
 
-require_once 'dbConnection.php';  // Include the database connection class
+// Include the database connection class
 require_once 'b-crud.php';  // Include the CRUD class
 
 // Create a new database connection
-$database = new databaseConn();
-$db = $database->connect();
+
 
 if (!isset($_GET['material_id']) || empty($_GET['material_id'])) {
     header("Location: upload.php?error=missing_id");
@@ -14,7 +13,7 @@ if (!isset($_GET['material_id']) || empty($_GET['material_id'])) {
 }
 
 $material_id = (int)$_GET['material_id'];  // Ensure material_id is an integer
-$crud = new Crud($db);
+$crud = new crud();
 
 // Fetch the current file details (excluding the BLOB content if not needed)
 $file = $crud->getFile($material_id);

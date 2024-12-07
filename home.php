@@ -6,12 +6,11 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-require_once 'dbConnection.php';
+
 require_once 'b-crud.php';
 
-$database = new databaseConn();
-$db = $database->connect();
-$crud = new crud($db);
+
+$crud = new crud();
 
 $username = $_SESSION['username'];
 $accountId = $crud->getAccountIdByUsername($username);

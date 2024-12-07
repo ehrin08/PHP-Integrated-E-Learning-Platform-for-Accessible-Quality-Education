@@ -1,26 +1,33 @@
 <?php
 
-class crud
+require_once 'b-crudBase.php';
+
+class crud extends databaseConn
 {
-    private $conn;
     private $accountTable = "account";
     private $materialsTable = "learning_materials";
     private $feedbacksTable = "feedback";
 
     public $id;
-    public $username;
+    public $username = 'ehrin';
     public $email;
     public $password;
     public $title;
 
-    public function __construct($db)
+    private $conn;
+
+    public function __construct()
     {
-        $this->conn = $db;
+        // Establish database connection using inherited method
+        $this->conn = $this->connect();
+    }
+
+    public function showLogs(){
+        echo $this->username;
     }
 
     public function signUp()
     {
-
         $query = "INSERT INTO " . $this->accountTable . " (username, email, password) VALUES (:username, :email, :password)";
         $stmt = $this->conn->prepare($query);
 
@@ -28,10 +35,7 @@ class crud
         $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':password', $this->password);
 
-        if ($stmt->execute()) {
-            return true;
-        }
-        return false;
+        return $stmt->execute();
     }
 
     public function login()
@@ -83,7 +87,6 @@ class crud
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
 
     public function getFile($material_id)
     {
@@ -142,22 +145,20 @@ class crud
     {
         $query = "INSERT INTO " . $this->feedbacksTable . " (material_id, comment, contributors_name) VALUES (:material_id, :comment, :contributors_name)";
         $stmt = $this->conn->prepare($query);
-    
+
         // Bind the parameters
         $stmt->bindParam(':material_id', $material_id, PDO::PARAM_INT);
         $stmt->bindParam(':comment', $comment);
         $stmt->bindParam(':contributors_name', $contributor_name);
-    
+
         // Execute the query and check for success
         if ($stmt->execute()) {
             return true;
         } else {
-            // Add error handling
             print_r($stmt->errorInfo());
             return false;
         }
     }
-    
 
     public function getFeedbacks($material_id)
     {
@@ -168,4 +169,5 @@ class crud
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
+
 ?>
