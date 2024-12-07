@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2024 at 09:06 AM
+-- Generation Time: Dec 07, 2024 at 04:50 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -77,13 +77,15 @@ ALTER TABLE `account`
 -- Indexes for table `feedback`
 --
 ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`feedback_id`);
+  ADD PRIMARY KEY (`feedback_id`),
+  ADD KEY `FK_feedback_learning_materials` (`material_id`);
 
 --
 -- Indexes for table `learning_materials`
 --
 ALTER TABLE `learning_materials`
-  ADD PRIMARY KEY (`material_id`);
+  ADD PRIMARY KEY (`material_id`),
+  ADD KEY `FK_learning_materials_account` (`account_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -106,9 +108,24 @@ ALTER TABLE `feedback`
 --
 ALTER TABLE `learning_materials`
   MODIFY `material_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD CONSTRAINT `FK_feedback_learning_materials` FOREIGN KEY (`material_id`) REFERENCES `learning_materials` (`material_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `learning_materials`
+--
+ALTER TABLE `learning_materials`
+  ADD CONSTRAINT `FK_learning_materials_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`account_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-s
