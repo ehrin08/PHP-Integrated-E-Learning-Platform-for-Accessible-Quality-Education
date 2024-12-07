@@ -7,7 +7,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 
-require_once 'b-crud.php';
+require_once 'b_crud.php';
 
 
 $crud = new crud();
@@ -83,7 +83,7 @@ if (isset($_GET['material_id'])) {
                 <td style="width: 50%; vertical-align: top;">
                     <?php if (isset($_GET['material_id'])): ?>
                         <iframe
-                            src="b-viewFile.php?material_id=<?php echo $material_id; ?>"
+                            src="b_viewfile.php?material_id=<?php echo $material_id; ?>"
                             width="100%"
                             height="800vh"
                             style="border: none;">

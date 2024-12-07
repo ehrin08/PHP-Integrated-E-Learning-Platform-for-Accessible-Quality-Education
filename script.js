@@ -30,7 +30,7 @@ function handleFormSubmission(formId, url, callback) {
  */
 function handleSignUpFormSubmission(event) {
     event.preventDefault(); // Prevent the default form submission
-    handleFormSubmission('signUpForm', 'b-signUp.php', function (response) {
+    handleFormSubmission('signUpForm', 'b_signUp.php', function (response) {
         Swal.fire({
             title: response.status === 'success' ? 'Success!' : 'Error',
             text: response.message,
@@ -47,7 +47,7 @@ function handleSignUpFormSubmission(event) {
  */
 function handleLoginFormSubmission(event) {
     event.preventDefault(); // Prevent the default form submission
-    handleFormSubmission('loginForm', 'b-login.php', function (response) {
+    handleFormSubmission('loginForm', 'b_login.php', function (response) {
         Swal.fire({
             title: response.status === 'success' ? 'Success!' : 'Error',
             text: response.message,
@@ -68,7 +68,7 @@ function handleFileUpload(event) {
 
     var formData = new FormData($('#uploadForm')[0]); // Get form data including file
     $.ajax({
-        url: 'b-upload.php',
+        url: 'b_upload.php',
         type: 'POST',
         data: formData,
         processData: false, // Prevent jQuery from processing the data
@@ -104,7 +104,7 @@ function deleteFile(materialId) {
         if (result.isConfirmed) {
             console.log('Deleting file...');  // Debug log
             $.ajax({
-                url: 'b-delete.php',
+                url: 'b_delete.php',
                 type: 'GET',
                 data: { material_id: materialId },
                 success: function(response) {
@@ -165,7 +165,7 @@ function deleteFile(materialId) {
         if (result.isConfirmed) {
             console.log('Deleting file...');  // Debug log
             $.ajax({
-                url: 'b-delete.php', // URL of the PHP file to delete the record
+                url: 'b_delete.php', // URL of the PHP file to delete the record
                 type: 'GET', // Use GET method
                 data: { material_id: materialId }, // Pass the material ID
                 success: function(response) {
@@ -201,7 +201,7 @@ function handleEditFile(event, materialId) {
     var formData = new FormData($('#editForm')[0]);
 
     $.ajax({
-        url: 'b-edit.php?material_id=' + materialId,
+        url: 'b_edit.php?material_id=' + materialId,
         type: 'POST',
         data: formData,
         processData: false, // Prevent jQuery from processing the data
@@ -235,7 +235,7 @@ function submitFeedback(event) {
     var formData = $('#feedbackForm').serialize(); // Serialize form data
 
     $.ajax({
-        url: 'b-feedback.php',  // PHP script to process the feedback
+        url: 'b_feedback.php',  // PHP script to process the feedback
         type: 'POST',
         data: formData,
         success: function(response) {

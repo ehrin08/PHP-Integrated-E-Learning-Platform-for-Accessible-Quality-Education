@@ -1,6 +1,6 @@
 <?php
 
-require_once 'b-crudBase.php';
+require_once 'b_crudBase.php';
 
 class crud extends databaseConn
 {

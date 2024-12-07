@@ -1,6 +1,6 @@
 <?php
   // Include the database connection class
-require_once 'b-crud.php';  // Include the CRUD class
+require_once 'b_crud.php';  // Include the CRUD class
 
 header('Content-Type: application/json'); // Set the response header to JSON
 

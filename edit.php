@@ -1,10 +1,6 @@
 <?php
-
-
 // Include the database connection class
-require_once 'b-crud.php';  // Include the CRUD class
-
-// Create a new database connection
+require_once 'b_crud.php';  // Include the CRUD class
 
 
 if (!isset($_GET['material_id']) || empty($_GET['material_id'])) {
